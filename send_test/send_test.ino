@@ -4,7 +4,7 @@
 #include <RF24.h>
 
 //create an RF24 object
-RF24 radio(9, 10);  // CE, CSN
+RF24 radio(10, 9);  // CE, CSN
 
 //address through which two modules communicate.
 const byte address[6] = "00001";
@@ -13,7 +13,9 @@ void setup()
 {
   Serial.begin(9600);
   
-  radio.begin();
+  if(radio.begin()){
+    Serial.println("INIT OK");
+  }
   
   //set the address
   radio.openWritingPipe(address);

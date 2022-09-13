@@ -10,6 +10,7 @@ U8X8_SH1106_128X64_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 
 
 
+
 void setup(void)
 {
   Wire.begin();
@@ -24,10 +25,10 @@ void setup(void)
 
 }
 
+char buff[16];
 void loop(void)
 {
   u8x8.setFont(u8x8_font_chroma48medium8_r);
-  u8x8.drawString(0,1,String( AcX));
 
   Wire.beginTransmission(MPU);
   Wire.write(0x3B);  
@@ -41,8 +42,29 @@ void loop(void)
   GyY=Wire.read()<<8|Wire.read();  
   GyZ=Wire.read()<<8|Wire.read();  
 
-  u8x8.print(AcX);  
+  itoa(GyX,buff,10);
+  u8x8.drawString(0,1,"GyX ");
+  u8x8.drawString(5,1,buff);
 
- 
-  delay(2000);
+  itoa(GyY,buff,10);
+  u8x8.drawString(0,2,"GyY ");
+  u8x8.drawString(5,2,buff);
+
+  itoa(GyZ,buff,10);
+  u8x8.drawString(0,3,"GyZ ");
+  u8x8.drawString(5,3,buff);
+
+
+  itoa(AcX,buff,10);
+  u8x8.drawString(0,5,"AcX ");
+  u8x8.drawString(5,5,buff);
+
+  itoa(AcY,buff,10);
+  u8x8.drawString(0,6,"AcY ");
+  u8x8.drawString(5,6,buff);
+
+  itoa(AcZ,buff,10);
+  u8x8.drawString(0,7,"AcZ ");
+  u8x8.drawString(5,7,buff);
+
 }
